@@ -6,11 +6,11 @@ import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { ClerkProvider, SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-
+import { NavigationContainer } from "@react-navigation/native";
 //import screen
 import LoginScreen from "./src/Screens/LoginScreen";
 import HomeScreen from "./src/Screens/HomeScreen";
-
+import TabNavigation from "./src/TabNavigation/TabNavigation";
 //import create:
 import fonts from "./src/fonts/fonts";
 
@@ -28,9 +28,8 @@ export default function App() {
         return null;
     }
 
-
     // Sign in:
-    const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
+    const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
     if (!publishableKey) {
         throw new Error("Add EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY to your .env file");
     }
@@ -38,7 +37,9 @@ export default function App() {
     return (
         <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
             <SignedIn>
-                <HomeScreen />
+                <NavigationContainer>
+                    <TabNavigation />
+                </NavigationContainer>
             </SignedIn>
             <SignedOut>
                 <LoginScreen />

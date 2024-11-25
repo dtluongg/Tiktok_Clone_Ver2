@@ -1,0 +1,16 @@
+Các link:
+
+
+1. Kiểm tra user:
+https://dashboard.clerk.com/apps/app_2pIhjseatI9GoOsTQkO8vbV2WHD/instances/ins_2pIhjwOUAbwcB477C5EFPxabt8C/users
+
+2. Kiểm tra database:
+https://supabase.com/dashboard/project/aqipdsejgytslinzkqwh/editor/29209?schema=public
+
+
+
+
+Các doc:
+
+1: OAuth:
+https://clerk.com/docs/custom-flows/oauth-connections
