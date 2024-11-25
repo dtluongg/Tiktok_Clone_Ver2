@@ -10,6 +10,10 @@ https://supabase.com/dashboard/project/aqipdsejgytslinzkqwh/editor/29209?schema=
 3: link icon:
 https://icons.expo.fyi/Index
 
+4: link AWS:
+Setup buckets AWS S3
+https://us-east-1.console.aws.amazon.com/s3/buckets?region=us-east-1&bucketType=general
+
 
 Các doc:
 
