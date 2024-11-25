@@ -7,7 +7,8 @@ https://dashboard.clerk.com/apps/app_2pIhjseatI9GoOsTQkO8vbV2WHD/instances/ins_2
 2. Kiểm tra database:
 https://supabase.com/dashboard/project/aqipdsejgytslinzkqwh/editor/29209?schema=public
 
-
+3: link icon:
+https://icons.expo.fyi/Index
 
 
 Các doc:
