@@ -6,7 +6,8 @@ import * as WebBrowser from "expo-web-browser";
 WebBrowser.maybeCompleteAuthSession();
 import { useWarmUpBrowser } from "../../Hooks/useWarmUpBrowser";
 import { useOAuth, useAuth } from "@clerk/clerk-expo";
-import supabase from "../../Hooks/supabaseConfig";
+import {supabase} from "../../Hooks/supabaseConfig";
+import * as Linking from "expo-linking";
 // create
 import styles from "./style";
 
@@ -14,55 +15,40 @@ const LoginScreen = () => {
     // webBrowser:
     useWarmUpBrowser();
     const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
-//     const onPressAuth = React.useCallback(async () => {
-//     try {
-//         const { createdSessionId, signUp } = await startOAuthFlow();
-//         if (createdSessionId) {
-//             // Kích hoạt session
-//             setActive({ session: createdSessionId });
-//             console.log("Session set successfully:", createdSessionId);
+    const onPressAuthGoogle = React.useCallback(async () => {
+        try {
+            const { createdSessionId, signIn, signUp, setActive } = await startOAuthFlow({
+                redirectUrl: Linking.createURL("/dashboard", { scheme: "myapp" }),
+            });
+            if (createdSessionId) {
+                setActive({ session: createdSessionId });
+                console.log("Session set successfully:", createdSessionId);
+                // Nếu có thông tin từ signUp, lưu vào Supabase
+                if (signUp?.emailAddress) {
+                    const { data, error } = await supabase
+                        .from("Users")
+                        .insert([
+                            {
+                                name: signUp?.firstName,
+                                email: signUp?.emailAddress,
+                                username: (signUp?.emailAddress).split('@')[0],
+                            },
+                        ])
+                        .select();
 
-//             // Nếu có thông tin từ signUp, lưu vào Supabase
-//             if (signUp?.emailAddress) {
-//                 const { data, error } = await supabase
-//                     .from("Users")
-//                     .insert([
-//                         {
-//                             name: signUp?.firstName,
-//                             email: signUp?.emailAddress,
-//                         },
-//                     ])
-//                     .select();
-
-//                 if (error) {
-//                     console.error("Supabase insert error:", error);
-//                 } else {
-//                     console.log("User data inserted:", data);
-//                 }
-//             }
-//         } else {
-//             console.log("OAuth flow did not return a session ID.");
-//         }
-//     } catch (err) {
-//         console.error("OAuth error:", err);
-//     }
-// }, [setActive]);
-
-const onPressAuth = React.useCallback(async () => {
-    try {
-        console.log("Starting OAuth flow...");
-        const result = await startOAuthFlow();
-        console.log("OAuth flow result:", result);
-
-        if (result.createdSessionId) {
-            console.log("Session created successfully:", result.createdSessionId);
-        } else {
-            console.log("OAuth flow did not return a session ID.");
+                    if (error) {
+                        console.error("Supabase insert error:", error);
+                    } else {
+                        console.log("User data inserted:", data);
+                    }
+                }
+            } else {
+                // Use signIn or signUp for next steps such as MFA
+            }
+        } catch (err) {
+            console.error("OAuth error", err);
         }
-    } catch (err) {
-        console.error("OAuth error:", err);
-    }
-}, []);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -86,7 +72,7 @@ const onPressAuth = React.useCallback(async () => {
                 </Text>
                 <Text style={styles.titleSubmit}>Sign in with Google or Facebook</Text>
                 <View style={styles.socialChoose}>
-                    <TouchableOpacity style={styles.btnGoogle} onPress={onPressAuth}>
+                    <TouchableOpacity style={styles.btnGoogle} onPress={onPressAuthGoogle}>
                         <Image style={styles.logoImage} source={require("../../logo/google.jpg")} />
                         <Text style={styles.textImage}>Google</Text>
                     </TouchableOpacity>
