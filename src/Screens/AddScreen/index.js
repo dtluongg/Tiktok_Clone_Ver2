@@ -1,39 +1,19 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useUser } from "@clerk/clerk-expo";
-import { supabase } from "../../Hooks/supabaseConfig";
-import * as ImagePicker from "expo-image-picker";
-//import create:
-import styles from "./style";
+import React from "react";
+import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import After_Add_View from "./Add_Screen";
+import Before_Add_View from "./Add_Screen_Before";
 
-const AddScreen = () => {
-    const handleSelectVideoFile = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ["images", "videos"],
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+const Stack = createStackNavigator();
 
-        console.log(result);
-
-        if (!result.canceled) {
-            console.log(result.assets[0].uri);
-            setImage(result.assets[0].uri);
-        }
-    };
-
+const Add_Screen = () => {
     return (
-        <View style={styles.AddView}>
-            <Image style={styles.imageIcon} source={require("../../img/AddScreen/upload.png")} />
-            <Text style={styles.title}>Start Uploading Short Video</Text>
-            <Text style={styles.titleSub}>Lets upload short your video</Text>
-            <TouchableOpacity style={styles.buttonUpload} onPress={handleSelectVideoFile}>
-                <Text style={styles.titleSubmit}>Select Your Video</Text>
-            </TouchableOpacity>
-        </View>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="After_Add_Screen" component={After_Add_View} />
+            <Stack.Screen name="Before_Add_Screen" component={Before_Add_View} />
+        </Stack.Navigator>
     );
 };
 
-export default AddScreen;
+export default Add_Screen;

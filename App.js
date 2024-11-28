@@ -7,15 +7,15 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { ClerkProvider, SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 //import screen
 import LoginScreen from "./src/Screens/LoginScreen";
 import HomeScreen from "./src/Screens/HomeScreen";
 import TabNavigation from "./src/TabNavigation/TabNavigation";
 //import create:
 import fonts from "./src/fonts/fonts";
-
 // const:
-
+const Stack = createStackNavigator();
 export default function App() {
     // Font:
     const [loaded, error] = useFonts(fonts);
