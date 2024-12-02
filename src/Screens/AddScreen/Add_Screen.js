@@ -24,21 +24,25 @@ const After_Add_View = ({ navigation }) => {
 
         if (!result.canceled) {
             console.log(result.assets[0].uri);
-            const link = 'https://media.istockphoto.com/id/1752533608/vi/video/n%C4%83m-cao-nh%E1%BB%AFng-ng%C6%B0%E1%BB%9Di-kinh-doanh-v%C3%A0-l%C3%A0m-vi%E1%BB%87c-theo-nh%C3%B3m-v%E1%BB%9Bi-s%E1%BB%B1-h%E1%BB%A3p-t%C3%A1c-v%C3%A0-k%E1%BB%B7-ni%E1%BB%87m-trong-m%E1%BB%99t-v%C4%83n.mp4?s=mp4-640x640-is&k=20&c=2-1Ek2wDMrI6fIx72DlnMDwYdMnSrdOkxGYa2XGzGqA=';
+            GenerateThumbnailVideo(result.assets[0].uri)
+            
         }
     };
 
     // Used to Genarate the Thumbnail:
-    const GenerateThumbnailVideo = async () => {
+    const GenerateThumbnailVideo = async (Video_uri) => {
         try {
-            const link= 'https://media.istockphoto.com/id/1752533608/vi/video/n%C4%83m-cao-nh%E1%BB%AFng-ng%C6%B0%E1%BB%9Di-kinh-doanh-v%C3%A0-l%C3%A0m-vi%E1%BB%87c-theo-nh%C3%B3m-v%E1%BB%9Bi-s%E1%BB%B1-h%E1%BB%A3p-t%C3%A1c-v%C3%A0-k%E1%BB%B7-ni%E1%BB%87m-trong-m%E1%BB%99t-v%C4%83n.mp4?s=mp4-640x640-is&k=20&c=2-1Ek2wDMrI6fIx72DlnMDwYdMnSrdOkxGYa2XGzGqA=';
-            console.log(link);
+            console.log(Video_uri);
             const { uri } = await VideoThumbnails.getThumbnailAsync(
-              link,
+                Video_uri,
               {
-                time: 15000,
+                time: 1500,
               }
             );
+            navigation.navigate('Before_Add_Screen',{
+                video: Video_uri,
+                thumbnail: uri
+            });
             console.log(uri);
           } catch (e) {
             console.warn(e);
@@ -50,7 +54,7 @@ const After_Add_View = ({ navigation }) => {
             <Image style={styles.imageIcon} source={require("../../img/AddScreen/upload.png")} />
             <Text style={styles.title}>Start Uploading Short Video</Text>
             <Text style={styles.titleSub}>Lets upload short your video</Text>
-            <TouchableOpacity style={styles.buttonUpload} onPress={GenerateThumbnailVideo}>
+            <TouchableOpacity style={styles.buttonUpload} onPress={handleSelectVideoFile}>
                 <Text style={styles.titleSubmit}>Select Your Video</Text>
             </TouchableOpacity>
         </View>

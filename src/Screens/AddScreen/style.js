@@ -34,6 +34,25 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 15
     },
+    AddViewBefore:{
+        flex: 1,
+        backgroundColor: color.WHITE
+    },
+    viewScroll:{
+        padding: 20,
+    },
+    viewBeforeContainer:{
+        marginTop: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    image:{
+        width: 200,
+        height: 300,
+        borderRadius: 15,
+        marginTop: 20,
+    }
 });
 
 export default styles;
