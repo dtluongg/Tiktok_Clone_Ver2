@@ -1,30 +1,17 @@
-import React, { useEffect } from 'react';
-import {View, Text} from 'react-native';
-import {useUser} from "@clerk/clerk-expo";
-import {supabase} from "../../Hooks/supabaseConfig"
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./HomeScreen";
+import VideoListScreen from "./VideoListScreen";
 
-//import create:
-import styles from './style'
+const Stack = createStackNavigator();
 
-const HomeScreen = () => {
-    const {user} = useUser();
-    useEffect(()=>{
-        user&&updateProfileImage();
-    },[user])
-    const updateProfileImage =async () => {
-        const {data, error} = await supabase
-        .from('Users')
-        .update({'profileImage': user?.imageUrl})
-        .eq('email',user?.primaryEmailAddress?.emailAddress)
-        .is('profileImage', null)
-        .select();
-        console.log(data)
-    }
-    return(
-        <View style = {styles.homeView}>
-            <Text> This is Home Screen</Text>
-        </View>
-    )
-}
+const Home_Screen = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="VideoListScreen" component={VideoListScreen} />
+        </Stack.Navigator>
+    );
+};
 
-export default HomeScreen;
+export default Home_Screen;

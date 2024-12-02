@@ -44,7 +44,7 @@ const Before_Add_View = ({ navigation }) => {
         const videoUrl = await UploadFileToAws(createParams.video, "video");
         const thumbnailUrl = await UploadFileToAws(createParams.thumbnail, "image");
         const { data: session } = await supabase.auth.getSession();
-        const email = session?.user?.email || "fastdominicracing@gmail.com";
+        const email = session?.user?.email || "dotienluong1402@gmail.com";
         const postData = {
             videoUrl: videoUrl,
             thumbnail: thumbnailUrl,
